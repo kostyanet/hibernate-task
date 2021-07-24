@@ -52,7 +52,7 @@ public class App {
 
     public void deleteAutos() {
         dao.deleteById(2);
-        dao.deleteAll();
+//        dao.deleteAll();
     }
 
 }

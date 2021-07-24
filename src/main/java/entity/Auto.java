@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Auto entity must be featured by the following properties:
@@ -15,6 +17,8 @@ import javax.persistence.*;
 @Setter
 @Table(name = "auto")
 public class Auto {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,10 +33,10 @@ public class Auto {
 
     @NonNull
     @Column(name = "manufacture_date")
-    private String manufactureDate;
+    private LocalDate manufactureDate;
 
     @Column(name = "cell_date")
-    private String cellDate;
+    private LocalDate cellDate;
 
     @Column(name = "gearType")
     @Enumerated(EnumType.STRING)
@@ -46,10 +50,15 @@ public class Auto {
     public Auto(String title, float price, String manufactureDate, String cellDate, GearType gearType, int fuelVolume) {
         this.title = title;
         this.price = price;
-        this.manufactureDate = manufactureDate;
-        this.cellDate = cellDate;
         this.gearType = gearType;
         this.fuelVolume = fuelVolume;
+
+        try {
+            this.manufactureDate = LocalDate.parse(manufactureDate, formatter);
+            this.cellDate = LocalDate.parse(cellDate, formatter);;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,4 +73,5 @@ public class Auto {
                 ", fuelVolume=" + fuelVolume +
                 '}';
     }
+
 }
