@@ -38,7 +38,9 @@ public class App {
 
     public void getAuto() {
         System.out.println(dao.getById(2));
-        System.out.println(dao.getByTitle("Skoda"));
+        System.out.println(
+                Arrays.toString(dao.getByTitle("Skoda").toArray())
+        );
     }
 
     public void listAutos() {
@@ -52,7 +54,6 @@ public class App {
 
     public void deleteAutos() {
         dao.deleteById(2);
-//        dao.deleteAll();
     }
 
 }
