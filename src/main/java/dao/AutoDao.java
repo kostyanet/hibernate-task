@@ -9,11 +9,6 @@ import utils.HibernateUtil;
 import java.util.Collections;
 import java.util.List;
 
-/*
-delete auto
-delete all autos
- */
-
 
 public class AutoDao {
     public void deleteById(int id) {
@@ -100,20 +95,16 @@ public class AutoDao {
         return results;
     }
 
-    public Auto getByTitle(String title) {
+    public List<Auto> getByTitle(String title) {
         Transaction transaction = null;
-        Auto auto = null;
+        List<Auto> results = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             String hql = " FROM Auto a WHERE a.title = :title";
             Query query = session.createQuery(hql);
             query.setParameter("title", title);
-            List results = query.getResultList();
-
-            if (results != null && !results.isEmpty()) {
-                auto = (Auto) results.get(0);
-            }
+            results = query.getResultList();
             transaction.commit();
 
         } catch (Exception e) {
@@ -122,7 +113,7 @@ public class AutoDao {
             }
             e.printStackTrace();
         }
-        return auto;
+        return results;
     }
 
     public Auto getById(int id) {
@@ -173,7 +164,7 @@ public class AutoDao {
                     "SET title = :title, " +
                     "price = :price, " +
                     "manufactureDate = :manufactureDate, " +
-                    "cellDate = :cellDate, " +
+                    "sellDate = :sellDate, " +
                     "gearType = :gearType, " +
                     "fuelVolume = :fuelVolume " +
                     "WHERE id = :id";
@@ -183,7 +174,7 @@ public class AutoDao {
             query.setParameter("title", auto.getTitle());
             query.setParameter("price", auto.getPrice());
             query.setParameter("manufactureDate", auto.getManufactureDate());
-            query.setParameter("cellDate", auto.getCellDate());
+            query.setParameter("sellDate", auto.getSellDate());
             query.setParameter("gearType", auto.getGearType());
             query.setParameter("fuelVolume", auto.getFuelVolume());
 

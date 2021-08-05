@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Auto entity must be featured by the following properties:
- * id, title, price, manufacture date, cell date, gear type, fuel volume
+ * id, title, price, manufacture date, sell date, gear type, fuel volume
  */
 @Entity
 @Getter
@@ -35,10 +35,10 @@ public class Auto {
     @Column(name = "manufacture_date")
     private LocalDate manufactureDate;
 
-    @Column(name = "cell_date")
-    private LocalDate cellDate;
+    @Column(name = "sell_date")
+    private LocalDate sellDate;
 
-    @Column(name = "gearType")
+    @Column(name = "gear_type")
     @Enumerated(EnumType.STRING)
     private GearType gearType;
 
@@ -47,7 +47,7 @@ public class Auto {
 
     public Auto() {}
 
-    public Auto(String title, float price, String manufactureDate, String cellDate, GearType gearType, int fuelVolume) {
+    public Auto(String title, float price, String manufactureDate, String sellDate, GearType gearType, int fuelVolume) {
         this.title = title;
         this.price = price;
         this.gearType = gearType;
@@ -55,7 +55,7 @@ public class Auto {
 
         try {
             this.manufactureDate = LocalDate.parse(manufactureDate, formatter);
-            this.cellDate = LocalDate.parse(cellDate, formatter);;
+            this.sellDate = LocalDate.parse(sellDate, formatter);;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class Auto {
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", manufactureDate='" + manufactureDate + '\'' +
-                ", cellDate='" + cellDate + '\'' +
+                ", sellDate='" + sellDate + '\'' +
                 ", gearType=" + gearType +
                 ", fuelVolume=" + fuelVolume +
                 '}';
